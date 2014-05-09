@@ -20,25 +20,5 @@ Route::get('cmd/{plugin}', function($plugin)
     return $plugin;
 });
 
-Route::any('/{page}', function($page)
-{
-    if ($page === '/')
-    {
-        $page = Page::first();
-    }
-    else
-    {
-        $page = Page::where('name', $page)->first();
-    }
-    if ($page)
-    {
-        $parser = new Hokuken\HaikMarkdown\HaikMarkdown();
-        $html = $parser->transform($page->body);
-        return $html;
-    }
-    else
-    {
-        App::abort(404);
-    }
-})
+Route::any('/{page}', 'PageController@show')
 ->where('page', '.*');
