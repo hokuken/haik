@@ -22,6 +22,23 @@ Route::get('cmd/{plugin}', function($plugin)
 
 Route::any('/{page}', function($page)
 {
-    return $page;
+    if ($page === '/')
+    {
+        $page = Page::first();
+    }
+    else
+    {
+        $page = Page::where('name', $page)->first();
+    }
+    if ($page)
+    {
+        $parser = new Hokuken\HaikMarkdown\HaikMarkdown();
+        $html = $parser->transform($page->body);
+        return $html;
+    }
+    else
+    {
+        App::abort(404);
+    }
 })
 ->where('page', '.*');
