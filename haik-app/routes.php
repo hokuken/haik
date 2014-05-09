@@ -11,15 +11,9 @@
 |
 */
 
-Route::get('login', function()
-{
-    return 'login';
-});
+Route::any('login', array('uses' => 'SessionController@login', 'as' => 'login'));
 
-Route::get('logout', function()
-{
-    return 'logout';
-});
+Route::get('/logout', array('uses' => 'SessionController@logout', 'as' => '/logout'));
 
 Route::get('cmd/{plugin}', function($plugin)
 {

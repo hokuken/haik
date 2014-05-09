@@ -9,7 +9,7 @@ class HaikUsersTableSeeder extends Seeder {
         User::create(array(
                 'name' => 'admin',
                 'email' => 'user@example.com',
-                'password' => 'hogehoge',
+                'password' => Hash::make('hogehoge'),
         ));
         
     }
