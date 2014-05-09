@@ -13,12 +13,12 @@
 	},
 	"autoload": {
 		"classmap": [
-			"app/commands",
-			"app/controllers",
-			"app/models",
-			"app/database/migrations",
-			"app/database/seeds",
-			"app/tests/TestCase.php"
+			"haik-app/commands",
+			"haik-app/controllers",
+			"haik-app/models",
+			"haik-app/database/migrations",
+			"haik-app/database/seeds",
+			"haik-app/tests/TestCase.php"
 		]
 	},
 	"scripts": {
