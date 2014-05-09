@@ -16,8 +16,7 @@ class PageController extends BaseController {
         }
         if ($page)
         {
-            $parser = new HaikMarkdown();
-            $html = $parser->transform($page->body);
+            $html = Parser::transform($page->body);
             return $html;
         }
         else

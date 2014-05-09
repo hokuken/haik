@@ -119,7 +119,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-
+        'Hokuken\Haik\Markdown\ParsingServiceProvider',
 	),
 
 	/*
@@ -185,7 +185,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-
+        'Parser'          => 'Hokuken\Haik\Markdown\ParserFacade',
 	),
 
 );
