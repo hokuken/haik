@@ -1,7 +1,5 @@
 <?php
 
-use Hokuken\HaikMarkdown\HaikMarkdown;
-
 class PageController extends BaseController {
 
     public function show($page)
@@ -16,8 +14,7 @@ class PageController extends BaseController {
         }
         if ($page)
         {
-            $html = Parser::transform($page->body);
-            return $html;
+            return View::make('page.show', array('page' => $page->parseBody()));
         }
         else
         {
