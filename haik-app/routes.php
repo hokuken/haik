@@ -30,5 +30,5 @@ foreach ($files as $file_path)
     include $file_path;
 }
 
-Route::get('/{page}', 'PageController@show')
+Route::get('/{page}', array('uses' => 'PageController@show', 'as' => 'show_page'))
 ->where('page', '.*');
