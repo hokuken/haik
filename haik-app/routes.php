@@ -11,7 +11,23 @@
 |
 */
 
-Route::get('/', function()
+Route::get('login', function()
 {
-	return View::make('hello');
+    return 'login';
 });
+
+Route::get('logout', function()
+{
+    return 'logout';
+});
+
+Route::get('cmd/{plugin}', function($plugin)
+{
+    return $plugin;
+});
+
+Route::any('/{page}', function($page)
+{
+    return $page;
+})
+->where('page', '.*');
