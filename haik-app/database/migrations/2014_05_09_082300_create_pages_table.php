@@ -15,7 +15,7 @@ class CreatePagesTable extends Migration {
       Schema::create('haik_pages', function($table)
       {
            $table->increments('id')->unsigned();
-           $table->string('name');
+           $table->string('name')->unique();
            $table->text('body');
            $table->integer('body_version')->unsigined()->default(0);
            $table->softDeletes();
