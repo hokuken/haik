@@ -21,7 +21,8 @@
 			"haik-app/models",
 			"haik-app/database/migrations",
 			"haik-app/database/seeds",
-			"haik-app/tests/TestCase.php"
+			"haik-app/tests/TestCase.php",
+			"haik-app/plugins"
 		]
 	},
 	"scripts": {

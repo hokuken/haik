@@ -15,10 +15,20 @@ Route::any('login', array('uses' => 'SessionController@login', 'as' => 'login'))
 
 Route::get('/logout', array('uses' => 'SessionController@logout', 'as' => '/logout'));
 
-Route::get('cmd/{plugin}', function($plugin)
+/*
+|--------------------------------------------------------------------------
+| Plugin Routes
+|--------------------------------------------------------------------------
+|
+| If /haik-app/plugins/{plugin} dir has routes.php,
+| then include them.
+|
+*/
+$files = File::glob(app_path() . '/plugins/*/routes.php');
+foreach ($files as $file_path)
 {
-    return $plugin;
-});
+    include $file_path;
+}
 
-Route::any('/{page}', 'PageController@show')
+Route::get('/{page}', 'PageController@show')
 ->where('page', '.*');
