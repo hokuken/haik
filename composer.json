@@ -12,6 +12,9 @@
         "mockery/mockery": "dev-master"
 	},
 	"autoload": {
+		"psr-0": {
+            "Hokuken" : "haik-app/src/"
+		},
 		"classmap": [
 			"haik-app/commands",
 			"haik-app/controllers",
