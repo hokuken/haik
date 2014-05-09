@@ -1,0 +1,23 @@
+{
+  "name": "haik",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hokuken-inc/haik.git"
+  },
+  "author": "hokuken <customer@hokuken.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hokuken-inc/haik/issues"
+  },
+  "homepage": "https://github.com/hokuken-inc/haik",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "load-grunt-tasks": "^0.4.0",
+    "grunt-exec": "^0.4.5"
+  }
+}
