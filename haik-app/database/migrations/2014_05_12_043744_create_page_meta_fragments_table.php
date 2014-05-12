@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration {
+class CreatePageMetaFragmentsTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,14 +12,12 @@ class CreatePagesTable extends Migration {
      */
     public function up()
     {
-        Schema::create('haik_pages', function($table)
+        Schema::create('haik_page_meta_fragments', function($table)
         {
             $table->increments('id')->unsigned();
-            $table->string('name')->unique();
-            $table->text('body');
-            $table->integer('body_version')->unsigined()->default(0);
-            $table->softDeletes();
-            $table->timestamps();
+            $table->integer('haik_page_id')->unsigned();
+            $table->string('key');
+            $table->text('value');
         });
     }
 
@@ -30,7 +28,7 @@ class CreatePagesTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('haik_pages');
+    	Schema::drop('haik_page_meta_fragments');
     }
 
 }
