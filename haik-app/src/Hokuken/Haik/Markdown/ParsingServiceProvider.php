@@ -29,7 +29,7 @@ class ParsingServiceProvider extends ServiceProvider {
             $repository = new BootstrapPluginRepository($parser);
             $parser->registerPluginRepository($repository);
 
-            $repository = new PackeagedPluginRepository($parser);
+            $repository = new PackagedPluginRepository($parser);
             $parser->registerPluginRepository($repository);
 
             return $parser;

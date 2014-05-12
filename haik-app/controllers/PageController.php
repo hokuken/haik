@@ -14,6 +14,7 @@ class PageController extends BaseController {
         }
         if ($page)
         {
+            App::bind('page.current', $page);
             return View::make('page.show', array('page' => $page->parseBody()));
         }
         else
