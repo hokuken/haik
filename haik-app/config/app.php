@@ -120,6 +120,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Hokuken\Haik\Markdown\ParsingServiceProvider',
+        'Hokuken\Haik\Page\PageServiceProvider',
 	),
 
 	/*
