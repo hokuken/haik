@@ -8,7 +8,7 @@ use Redirect;
 use BaseController;
 use Page;
 
-class Controller extends BaseController {
+class EditPluginController extends BaseController {
 
     /**
      * Show page edit form
