@@ -4,7 +4,9 @@ namespace Hokuken\Haik\Markdown;
 use Illuminate\Support\ServiceProvider;
 use App;
 use Hokuken\Haik\Markdown\HaikMarkdown;
-use Hokuken\HaikMarkdown\Plugin\Basic\PluginRepository;
+use Hokuken\HaikMarkdown\Plugin\Basic\PluginRepository as BasicPluginRepository;
+use Hokuken\HaikMarkdown\Plugin\Bootstrap\PluginRepository as BootstrapPluginRepository;
+use Hokuken\Haik\Plugin\Repository\ParserPluginRepository as PackagedPluginRepository;
 
 class ParsingServiceProvider extends ServiceProvider {
     
@@ -20,8 +22,16 @@ class ParsingServiceProvider extends ServiceProvider {
         $this->app['markdown.parser'] = $this->app->share(function($app)
         {
             $parser = new HaikMarkdown($app);
-            $repository = new PluginRepository($parser);
+
+            $repository = new BasicPluginRepository($parser);
             $parser->registerPluginRepository($repository);
+
+            $repository = new BootstrapPluginRepository($parser);
+            $parser->registerPluginRepository($repository);
+
+            $repository = new PackeagedPluginRepository($parser);
+            $parser->registerPluginRepository($repository);
+
             return $parser;
         });
     }
