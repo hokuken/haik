@@ -24,7 +24,7 @@ class Page extends Eloquent {
      * @return string HTML content
      * @throws \RuntimeException when parseBody is not called
      */
-    public function getContent()
+    public function getContentAttribute()
     {
         if ($this->bodyIsParsed)
         {
@@ -33,4 +33,12 @@ class Page extends Eloquent {
         throw new \RuntimeException("This page body is not parsed.");
     }
 
+    public function getMetaAttribute()
+    {
+        if ($this->exists)
+        {
+            return App::make('PageMeta', array($this));
+        }
+        return App::make('PageMeta', array($this, false));
+    }
 }

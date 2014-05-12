@@ -12,15 +12,41 @@ class PageController extends BaseController {
         {
             $page = Page::where('name', $page)->first();
         }
+
         if ($page)
         {
-            App::bind('page.current', $page);
-            return View::make('page.show', array('page' => $page->parseBody()));
+            App::instance('page.current', $page);
+
+            return $this->render();
+
         }
         else
         {
             App::abort(404);
         }
+    }
+
+    protected function render()
+    {
+        $page = App::make('page.current');
+
+        $page_data = array();
+
+        // Merge page meta data
+        $page_meta = $page->meta;
+        foreach (array_dot($page_meta->getAll()) as $key => $value)
+        {
+            $key = str_replace('.', '_', $key);
+            $page_data[$key] = $value;
+        }
+
+        // Parse body to HTML
+        $page->parseBody();
+        $page_data['page'] = $page->name;
+        $page_data['content'] = $page->content;
+        $page_data['updated_at'] = $page->updated_at->format('Y年m月d日');
+
+        return View::make('page.show', $page_data);
     }
 
 }
