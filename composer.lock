@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ce08a48226319ab6397d9f0b6325a1b8",
+    "hash": "60c615e5764748c08f2fe3415eba1e2f",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -230,12 +230,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1c8fb08d0d071272ce65fc2db5170d6ba7ce7f4d"
+                "reference": "c1d343a07169fc9f2b88320275100c48a6169580"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1c8fb08d0d071272ce65fc2db5170d6ba7ce7f4d",
-                "reference": "1c8fb08d0d071272ce65fc2db5170d6ba7ce7f4d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c1d343a07169fc9f2b88320275100c48a6169580",
+                "reference": "c1d343a07169fc9f2b88320275100c48a6169580",
                 "shasum": ""
             },
             "require": {
@@ -338,7 +338,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2014-05-08 17:35:43"
+            "time": "2014-05-11 17:20:27"
         },
         {
             "name": "michelf/php-markdown",
@@ -2049,12 +2049,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32"
+                "reference": "955c24b708f8bfd6a05f303217a8dac3a443d531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/ad4e1e23ae01b483c16f600ff1bebec184588e32",
-                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/955c24b708f8bfd6a05f303217a8dac3a443d531",
+                "reference": "955c24b708f8bfd6a05f303217a8dac3a443d531",
                 "shasum": ""
             },
             "require": {
@@ -2091,7 +2091,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-03-03 05:10:30"
+            "time": "2014-05-12 05:34:42"
         },
         {
             "name": "phpunit/phpunit",
