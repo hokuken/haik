@@ -30,7 +30,9 @@ class PageController extends BaseController {
     {
         $page = App::make('page.current');
 
-        $page_data = array();
+        $page_data = array(
+            'title' => $page->name
+        );
 
         // Merge page meta data
         $page_meta = $page->meta;
@@ -45,6 +47,10 @@ class PageController extends BaseController {
         $page_data['page'] = $page->name;
         $page_data['content'] = $page->content;
         $page_data['updated_at'] = $page->updated_at->format('Y年m月d日');
+
+        $page_data['messages'] = array(
+            'edit_link' => $page_data['title'] . 'の編集'
+        );
 
         return View::make('page.show', $page_data);
     }

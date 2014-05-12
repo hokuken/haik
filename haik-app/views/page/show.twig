@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+      <title>{{ title }}</title>
+  </head>
+  <body>
+    {{ content|raw }}
+
+    <hr>
+    <small>最終更新：{{ updated_at }}</small><br>
+    {{ link_to_route('plugin.edit', messages.edit_link, page) }}
+  </body>
+</html>
