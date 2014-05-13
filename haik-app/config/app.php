@@ -120,6 +120,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Barryvdh\TwigBridge\ServiceProvider',
+		'Hokuken\Haik\Site\SiteServiceProvider',
         'Hokuken\Haik\Markdown\ParsingServiceProvider',
         'Hokuken\Haik\Page\PageServiceProvider',
 	),
@@ -188,6 +189,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Twig'            => 'Barryvdh\TwigBridge\Twig',
+		'Site'            => 'Hokuken\Haik\Site\SiteFacade',
         'Parser'          => 'Hokuken\Haik\Markdown\ParserFacade',
 	),
 
