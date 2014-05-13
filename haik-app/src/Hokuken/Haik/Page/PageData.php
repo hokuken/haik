@@ -1,28 +1,17 @@
 <?php
 namespace Hokuken\Haik\Page;
 
-class PageData implements PageDataInterface {
+use Hokuken\Haik\Support\DataBag;
 
-    /** @var array of page data */
-    protected $data;
+class PageData extends DataBag implements PageDataInterface {
 
     /** @var array of page data context related *_once methods*/
     protected $contexts;
 
     public function __construct(array $data = array())
     {
-        $this->data = $data;
+        parent::__construct($data);
         $this->contexts = array();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function set($key, $value)
-    {
-        array_set($this->data, $key, $value);
-
-        return $this;
     }
 
     /**
@@ -30,47 +19,11 @@ class PageData implements PageDataInterface {
      */
     public function setOnce($context, $key, $value)
     {
-        if ($this->contextExists($context)) return;
+        if ($this->contextExists($context)) return $this;
         
         $this->setContext($context);
-        $this->data[$key] = $value;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setAll(array $data)
-    {
-        $data = array_merge(array_dot($this->data), array_dot($data));
-        foreach ($data as $key => $value)
-            $this->set($key, $value);
-
+        $this->set($key, $value);
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function get($key, $default_value = null)
-    {
-        return array_get($this->data, $key, $default_value);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAll()
-    {
-        return $this->data;
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function has($key)
-    {
-        $default_value = microtime();
-        return $this->get($key, $default_value) !== $default_value;
     }
 
     /**
@@ -91,7 +44,12 @@ class PageData implements PageDataInterface {
      */
     public function append($key, $value)
     {
-        $current_value = $this->has($key) ? $this->get($key) : '';
+        if ( ! is_string($value))
+            throw new \InvalidArgumentException("This method Permit only string to pass arg #2.");
+        $current_value = $this->get($key, '');
+        if ( ! is_string($current_value))
+            throw new \InvalidArgumentException("Cannot append to this offset: $key. Value is not string.");
+
         $this->set($key, $current_value . $value);
         return $this;
     }
@@ -112,7 +70,12 @@ class PageData implements PageDataInterface {
      */
     public function prepend($key, $value)
     {
-        $current_value = $this->has($key) ? $this->get($key) : '';
+        if ( ! is_string($value))
+            throw new \InvalidArgumentException("This method Permit only string to pass arg #2.");
+        $current_value = $this->get($key, '');
+        if ( ! is_string($current_value))
+            throw new \InvalidArgumentException("Cannot prepend to this offset: $key. Value is not string.");
+
         $this->set($key, $value . $current_value);
         return $this;
     }
@@ -125,15 +88,6 @@ class PageData implements PageDataInterface {
         if ($this->contextExists($context)) return;
         $this->setContext($context);
         $this->prepend($key, $value);
-        return $this;
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function remove($key)
-    {
-        if ($this->has($key)) unset($this->data[$key]);
         return $this;
     }
 

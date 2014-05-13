@@ -83,6 +83,23 @@ class PageDataTest extends TestCase {
         $result = $this->pageData->get('key');
         $this->assertEquals('default_value:append_value', $result);
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testThrowsWhenAppendValueIsNotString()
+    {
+        $this->pageData->append('not_string_value', array('foo' => 'bar'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testThrowsWhenAppendValueOfKeyIsNotString()
+    {
+        $this->pageData->set('not_string_value', array('foo' => 'bar'));
+        $this->pageData->append('not_string_value', 'string');
+    }
     
     public function testPrepend()
     {
@@ -90,6 +107,23 @@ class PageDataTest extends TestCase {
         $this->pageData->prepend('key', 'prepend_value:');
         $result = $this->pageData->get('key');
         $this->assertEquals('prepend_value:default_value', $result);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testThrowsWhenPrependValueIsNotString()
+    {
+        $this->pageData->prepend('not_string_value', array('foo' => 'bar'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testThrowsWhenPrependValueOfKeyIsNotString()
+    {
+        $this->pageData->set('not_string_value', array('foo' => 'bar'));
+        $this->pageData->prepend('not_string_value', 'string');
     }
     
     public function testAppendToTheKeyNotExists()
