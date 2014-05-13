@@ -71,7 +71,12 @@ class DataBag implements DataBagInterface, ArrayAccess {
      */
     public function setAll(array $data, $overwrite = false)
     {
-        $data = array_merge(array_dot($this->container), array_dot($data));
+        $data = array_dot($data);
+        if ($overwrite)
+        {
+            $this->removeAll();
+        }
+
         foreach ($data as $key => $value)
             $this->set($key, $value);
 
