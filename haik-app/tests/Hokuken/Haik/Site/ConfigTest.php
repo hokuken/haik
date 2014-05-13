@@ -24,6 +24,28 @@ class ConfigTest extends TestCase {
         $this->config->setAll($test_data);
     }
 
+    public function tearDown()
+    {
+        $this->config->deleteAll();
+    }
+
+    public function testService()
+    {
+        $expected = 'value';
+        $config = App::make('site.config');
+        $config->set('new.key', $expected);
+        $result = App::make('site.config')['new.key'];
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFacade()
+    {
+        $expected = 'foo, bar, buzz';
+        Site::set('test.text', $expected);
+        $result = Site::get('test.text');
+        $this->assertEquals($expected, $result);
+    }
+
     public function testGet()
     {
         $result = $this->config->get('site.title');
