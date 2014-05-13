@@ -16,7 +16,7 @@ class Config extends DataBag {
     public function __construct()
     {
         parent::__construct();
-        $this->removedFragments = array();
+        $this->removedFragments = new DataBag();
         $this->read();
     }
 
@@ -120,7 +120,7 @@ class Config extends DataBag {
     public function read()
     {
         $this->removeAll();
-        $this->removedFragments = array();
+        $this->removedFragments = new DataBag();
 
         $fragments = ConfigFragment::all();
 
@@ -140,7 +140,7 @@ class Config extends DataBag {
     public function save()
     {
         $data = array_dot($this->container);
-        $removed_data = array_dot($this->removedFragments);
+        $removed_data = array_dot($this->removedFragments->getAll());
 
         DB::transaction(function() use ($data, $removed_data)
         {
@@ -165,7 +165,7 @@ class Config extends DataBag {
      */
     public function delete()
     {
-        $removed_data = array_dot($this->removedFragments);
+        $removed_data = array_dot($this->removedFragments->getAll());
         DB::transaction(function() use ($removed_data)
         {
             foreach ($removed_data as $fragment)
