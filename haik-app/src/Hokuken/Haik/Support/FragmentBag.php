@@ -34,6 +34,14 @@ abstract class FragmentBag extends DataBag {
     abstract protected function createModel();
 
     /**
+     * Save model
+     */
+    protected function saveModel($fragment)
+    {
+        $fragment->save();
+    }
+
+    /**
      * @inheritdoc
      */
     public function get($key, $default_value = null)
@@ -155,20 +163,21 @@ abstract class FragmentBag extends DataBag {
      */
     public function save()
     {
+        $self = $this;
         $data = array_dot($this->container);
         $removed_data = array_dot($this->removedFragments->getAll());
 
-        DB::transaction(function() use ($data, $removed_data)
+        DB::transaction(function() use ($self, $data, $removed_data)
         {
             foreach ($data as $key => $fragment)
             {
-                if ( ! is_a($fragment, $this->model) or ! $fragment->getDirty()) continue;
-                $fragment->save();
+                if ( ! is_a($fragment, $self->model) or ! $fragment->getDirty()) continue;
+                $self->saveModel($fragment);
             }
     
             foreach ($removed_data as $key => $fragment)
             {
-                if ( ! is_a($fragment, $this->model)) continue;
+                if ( ! is_a($fragment, $self->model)) continue;
                 $fragment->delete();
             }
         });
