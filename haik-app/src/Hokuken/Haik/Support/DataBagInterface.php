@@ -53,4 +53,11 @@ interface DataBagInterface {
      */
     public function remove($key);
 
+    /**
+     * Remove all data
+     *
+     * @return $this for method chain
+     */
+    public function removeAll();
+
 }

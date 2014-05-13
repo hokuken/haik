@@ -91,8 +91,13 @@ class DataBag implements DataBagInterface, ArrayAccess {
      */
     public function remove($key)
     {
-        if ($this->has($key)) unset($this->container[$key]);
+        if ($this->has($key)) array_forget($this->container, $key);
         return $this;
+    }
+
+    public function removeAll()
+    {
+        $this->container = array();
     }
 
     /**
