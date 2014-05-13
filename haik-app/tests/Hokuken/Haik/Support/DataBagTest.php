@@ -70,6 +70,37 @@ class DataBagTest extends TestCase {
         );
         $this->bag->setAll($data);
 
+        $data = array(
+            'key_third'  => 'value_third',
+            'key_fourth' => 'value_fourth',
+        );
+        $result = $this->bag->setAll($data);
+
+        $result = $this->bag->getAll();
+        $expected = array(
+            'key_first'  => 'value_first',
+            'key_second' => 'value_second',
+            'key_third'  => 'value_third',
+            'key_fourth' => 'value_fourth',
+        );
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSetAllWithOverwrideIsTrue()
+    {
+        $data = array(
+            'key_first'  => 'value_first',
+            'key_second' => 'value_second',
+        );
+        $this->bag->setAll($data);
+
+        $data = array(
+            'key_third'  => 'value_third',
+            'key_fourth' => 'value_fourth',
+        );
+        $this->bag->setAll($data, true);
+
         $result = $this->bag->getAll();
         
         $this->assertEquals($data, $result);
