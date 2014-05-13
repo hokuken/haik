@@ -75,4 +75,60 @@ class DataBagTest extends TestCase {
         $this->assertEquals($data, $result);
     }
 
+    public function testArrayAccessSet()
+    {
+        $expected = 'value';
+        $this->bag['key'] = $expected;
+        $result = $this->bag->get('key');
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testThrowsExceptionWhenArrayAccessWithNullOffset()
+    {
+        $this->bag[] = 'new value';
+    }
+
+    public function testArrayAccessGet()
+    {
+        $expected = 'value';
+        $this->bag->set('key', $expected);
+        $result = $this->bag['key'];
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testArrayAccessExists()
+    {
+        $this->bag->set('key', 'value');
+        $result = isset($this->bag['key']);
+        $this->assertTrue($result);
+
+        $result = isset($this->bag['key_unknown']);
+        $this->assertFalse($result);
+    }
+
+    public function testArrayAccessUnset()
+    {
+        $this->bag->set('key', 'value');
+        unset($this->bag['key']);
+        $result = $this->bag->has('key');
+        $this->assertFalse($result);
+    }
+
+    public function testArrayIterator()
+    {
+        $expected = array(
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        );
+        $this->bag->setAll($expected);
+        foreach ($this->bag as $key => $value)
+        {
+            $this->assertEquals($expected[$key], $value);
+        }
+    }
+
 }

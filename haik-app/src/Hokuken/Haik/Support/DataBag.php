@@ -1,14 +1,17 @@
 <?php
 namespace Hokuken\Haik\Support;
 
-class DataBag implements DataBagInterface {
+use ArrayAccess;
+use ArrayIterator;
 
-    /** @var mixed data of the page*/
-    protected $data;
+class DataBag implements DataBagInterface, ArrayAccess {
+
+    /** @var array data container */
+    protected $container;
 
     public function __construct(array $data = array())
     {
-        $this->data = $data;
+        $this->container = $data;
     }
 
     /**
@@ -32,7 +35,7 @@ class DataBag implements DataBagInterface {
      */
     public function get($key, $default_value = null)
     {
-        return array_get($this->data, $key, $default_value);
+        return array_get($this->container, $key, $default_value);
     }
 
     /**
@@ -42,7 +45,7 @@ class DataBag implements DataBagInterface {
      */
     public function getAll()
     {
-        return $this->data;
+        return $this->container;
     }
 
     /**
@@ -54,7 +57,7 @@ class DataBag implements DataBagInterface {
      */
     public function set($key, $value)
     {
-        array_set($this->data, $key, $value);
+        array_set($this->container, $key, $value);
 
         return $this;
     }
@@ -68,7 +71,7 @@ class DataBag implements DataBagInterface {
      */
     public function setAll(array $data, $overwrite = false)
     {
-        $data = array_merge(array_dot($this->data), array_dot($data));
+        $data = array_merge(array_dot($this->container), array_dot($data));
         foreach ($data as $key => $value)
             $this->set($key, $value);
 
@@ -83,8 +86,48 @@ class DataBag implements DataBagInterface {
      */
     public function remove($key)
     {
-        if ($this->has($key)) unset($this->data[$key]);
+        if ($this->has($key)) unset($this->container[$key]);
         return $this;
     }
+
+    /**
+     * @throws \InvalidArgumentException when call with null $offset
+     */
+    public function offsetSet($offset, $value)
+    {
+        if (is_null($offset))
+        {
+            throw new \InvalidArgumentException("offset: null not allowed.");
+        }
+        else
+        {
+            $this->set($offset, $value);
+        }
+    }
+
+    public function offsetExists($offset)
+    {
+        return $this->has($offset);
+    }
+
+    public function offsetUnset($offset)
+    {
+        return $this->remove($offset);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+	/**
+	 * Get an iterator for the items.
+	 *
+	 * @return ArrayIterator
+	 */
+	public function getIterator()
+	{
+		return new ArrayIterator($this->container);
+	}
 
 }
