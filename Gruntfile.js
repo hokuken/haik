@@ -20,6 +20,12 @@ module.exports = function(grunt) {
             rename: function(dest, src){
               return path.normalize(this.cwd + src.replace(/less/g, 'css'));
             }
+          },
+          {
+            src: [
+              './haik-app/assets/stylesheets/haik.less'
+            ],
+            dest: './assets/css/haik.css'
           }
         ]
       }
@@ -31,7 +37,8 @@ module.exports = function(grunt) {
   	watch: {
       less: {
         files: [
-          './haik-contents/themes/*/less/*.less'
+          './haik-contents/themes/*/less/*.less',
+          './haik-app/assets/stylesheets/*.les'
         ],
         tasks: ['less'],
         options: {
