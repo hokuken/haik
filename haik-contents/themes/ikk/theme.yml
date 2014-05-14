@@ -1,0 +1,9 @@
+name:        ikk
+description: first simple theme
+version:     0.1.0
+thumbnail:   img/thumbnail.png
+css:         css/theme.css
+templates:
+  default:
+    filename: theme.html
+    thumbnail: img/thumbnail.default.png

@@ -1,5 +1,8 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
+
 class PageController extends BaseController {
 
     public function show($page)
@@ -58,10 +61,21 @@ class PageController extends BaseController {
         View::addNamespace('themes', $theme_repository_path);
 
         $theme = 'ikk';
+        $theme_path = $theme_repository_path . '/' . $theme;
+
+        // Read theme config from theme.yml
+        // !TODO: Put default config array
+        try {
+            $theme_config = Yaml::parse(file_get_contents($theme_path . '/theme.yml'));
+        }
+        catch (ParseException $e) {
+            $theme_config = array();
+        }
+        $theme_config['base_url'] = url('haik-contents/themes/'.$theme);
+        $theme_config['css'] = $theme_config['base_url'].'/'.$theme_config['css'];
+        $page_data['theme'] = $theme_config;
+
         $view = "themes::{$theme}.theme";
-
-        $page_data['theme']['css'] = url('haik-contents/themes/'.$theme.'/css/theme.css');
-
 
         return View::make($view, $page_data);
     }
