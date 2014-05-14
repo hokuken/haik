@@ -14,7 +14,7 @@ Route::group(array('prefix' => 'cmd/edit'), function($routes)
         )
     )->where('page', '.+');
 
-    Route::post('/cmd/edit', array(
+    Route::post('/', array(
             'uses' => $controller.'@save',
             'as' => 'plugin.edit.post'
         )
