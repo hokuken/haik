@@ -18,8 +18,13 @@ class HaikPagesTableSeeder extends Seeder {
 
         Page::create(array(
             'name' => 'SiteNav',
-            'body' => '* Item' . "\n" .
-                      '* Item' . "\n",
+            'body' => '
+::: nav
+* Item: #
+* Item: #
+{.navbar-right}
+:::
+',
         ));
 
         Page::create(array(
