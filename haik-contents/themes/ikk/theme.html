@@ -28,16 +28,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse theme-navbar">
           {{ nav.content|raw }}
-<!--
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-          </ul>
--->
+          {{ layout_page('SiteNav') }}
         </div><!-- /.navbar-collapse -->
 
       </div>
@@ -50,7 +41,7 @@
 
     <!-- footer -->
     <footer>
-      {{ footer.content|raw }}
+      {{ layout_page('SiteFooter') }}
     </footer>
     
     <!-- scripts -->

@@ -15,5 +15,16 @@ class HaikPagesTableSeeder extends Seeder {
             'name' => 'Contact',
             'body' => '# Test Test',
         ));
+
+        Page::create(array(
+            'name' => 'SiteNav',
+            'body' => '* Item' . "\n" .
+                      '* Item' . "\n",
+        ));
+
+        Page::create(array(
+            'name' => 'SiteFooter',
+            'body' => '** Footer **',
+        ));
     }
 }
