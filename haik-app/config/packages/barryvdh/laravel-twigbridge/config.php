@@ -49,6 +49,8 @@ return array(
         'autoescape'            => 'html',
         'optimizations'         => -1,
     ),
+    
+    'extension' => 'html',
 
 
   /*
