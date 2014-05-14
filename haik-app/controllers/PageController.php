@@ -52,7 +52,14 @@ class PageController extends BaseController {
             'edit_link' => $page_data['title'] . 'の編集'
         );
 
-        return View::make('page.show', $page_data);
+        $theme_repository_path = storage_path() . '/themes';
+        View::addLocation($theme_repository_path);
+        View::addNamespace('themes', $theme_repository_path);
+
+        $theme = 'ikku';
+        $view = "themes::{$theme}.theme";
+
+        return View::make($view, $page_data);
     }
 
 }
