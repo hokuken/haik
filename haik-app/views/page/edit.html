@@ -1,0 +1,45 @@
+{% extends "page.layout_editor.html" %}
+
+
+{% set title = page.name ~ "の編集" %}
+
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+
+{% block navbar %}
+
+<div class="nav navbar-nav navbar-right">
+  <button type="button" class="navbar-btn haik-btn haik-btn-link haik-text-muted">キャンセル</button>
+  <button type="button" class="navbar-btn haik-btn haik-btn-link haik-text-primary">プレビュー</button>
+  <button type="button" class="navbar-btn haik-btn haik-btn-sm haik-btn-success" data-edit-type="write">更新</button>
+</div>
+
+{% endblock%}
+
+{% block content %}
+
+  <div class="haik-container">
+    <div class="haik-editor">
+      {{ form_model(page, {'route': ['plugin.edit.post']} ) }}
+          {{ form_textarea('body', body, {'data-exnote':'onready', 'placeholder':'ここに本文'}) }}
+          {{ form_hidden('name') }}
+          {{ form_hidden('body_version') }}
+      {{ form_close() }}
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  {{ parent() }}
+  <script>
+    $(function(){
+      $("[data-edit-type=write]").on('click', function(){
+        $("form").submit();
+      });
+    });
+  </script>
+{% endblock %}
+
+

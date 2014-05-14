@@ -1,0 +1,566 @@
+// Core variables and mixins
+@import "variables.less";
+@import "mixins.less";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 14px;  
+}
+
+.haik-container {
+  .container-fixed();
+
+  @media (min-width: @screen-sm-min) {
+    width: @container-sm;
+  }
+  @media (min-width: @screen-md-min) {
+    width: @container-md;
+  }
+  @media (min-width: @screen-lg-min) {
+    width: @container-lg;
+  }
+}
+
+.haik-container-fluid {
+  .container-fixed();
+}
+
+.haik-navbar {
+  position: relative;
+  min-height: @navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
+  border: 1px solid transparent;
+  margin-bottom: 0;
+  background-color: rgba(255,255,255, .9);
+  border-color: @navbar-default-border;
+
+  // Prevent floats from breaking the navbar
+  &:extend(.clearfix all);
+  
+  a {
+      text-decoration: none;
+  }
+  
+  &.navbar-fixed-top,
+  &.navbar-fixed-bottom {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: @zindex-navbar-fixed;
+  
+    // Undo the rounded corners
+    @media (min-width: @grid-float-breakpoint) {
+      border-radius: 0;
+    }
+  }
+  &.navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px;
+  }
+  &.navbar-fixed-bottom {
+    bottom: 0;
+    margin-bottom: 0; // override .navbar defaults
+    border-width: 1px 0 0;
+  }
+
+  .navbar-header {
+    &:extend(.clearfix all);
+  
+    @media (min-width: @grid-float-breakpoint) {
+      float: left;
+    }
+  }
+
+  .navbar-collapse {
+    max-height: @navbar-collapse-max-height;
+    overflow-x: visible;
+    padding-right: @navbar-padding-horizontal;
+    padding-left:  @navbar-padding-horizontal;
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+    &:extend(.clearfix all);
+    -webkit-overflow-scrolling: touch;
+  
+    &.in {
+      overflow-y: auto;
+    }
+  
+    @media (min-width: @grid-float-breakpoint) {
+      width: auto;
+      border-top: 0;
+      box-shadow: none;
+  
+      &.collapse {
+        display: block !important;
+        height: auto !important;
+        padding-bottom: 0; // Override default setting
+        overflow: visible !important;
+      }
+  
+      &.in {
+        overflow-y: visible;
+      }
+  
+      // Undo the collapse side padding for navbars with containers to ensure
+      // alignment of right-aligned contents.
+      .navbar-fixed-top &,
+      .navbar-static-top &,
+      .navbar-fixed-bottom & {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  .haik-container,
+  .haik-container-fluid {
+    > .navbar-header,
+    > .navbar-collapse {
+      margin-right: -@navbar-padding-horizontal;
+      margin-left:  -@navbar-padding-horizontal;
+  
+      @media (min-width: @grid-float-breakpoint) {
+        margin-right: 0;
+        margin-left:  0;
+      }
+    }
+  }
+
+  .navbar-brand {
+    float: left;
+    padding: @navbar-padding-vertical @navbar-padding-horizontal;
+    font-size: @font-size-large;
+    line-height: @line-height-computed;
+    height: @navbar-height;
+
+    color: @navbar-default-brand-color;
+  
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  
+    @media (min-width: @grid-float-breakpoint) {
+      .navbar > .container &,
+      .navbar > .container-fluid & {
+        margin-left: -@navbar-padding-horizontal;
+      }
+    }
+  }
+
+  .navbar-toggle {
+    position: relative;
+    float: right;
+    margin-right: @navbar-padding-horizontal;
+    padding: 9px 10px;
+    .navbar-vertical-align(34px);
+    background-color: transparent;
+    background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+    border: 1px solid transparent;
+    border-radius: @border-radius-base;
+  
+    // We remove the `outline` here, but later compensate by attaching `:hover`
+    // styles to `:focus`.
+    &:focus {
+      outline: none;
+    }
+  
+    // Bars
+    .icon-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 1px;
+    }
+    .icon-bar + .icon-bar {
+      margin-top: 4px;
+    }
+  
+    @media (min-width: @grid-float-breakpoint) {
+      display: none;
+    }
+  }
+
+  .nav {
+    margin-bottom: 0;
+    padding-left: 0; // Override default ul/ol
+    list-style: none;
+    &:extend(.clearfix all);
+  
+    > li {
+      position: relative;
+      display: block;
+  
+      > a {
+        position: relative;
+        display: block;
+        padding: @nav-link-padding;
+        &:hover,
+        &:focus {
+          text-decoration: none;
+          background-color: @nav-link-hover-bg;
+        }
+      }
+  
+      // Disabled state sets text to gray and nukes hover/tab effects
+      &.disabled > a {
+        color: @nav-disabled-link-color;
+  
+        &:hover,
+        &:focus {
+          color: @nav-disabled-link-hover-color;
+          text-decoration: none;
+          background-color: transparent;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+
+  .navbar-nav {
+    margin: (@navbar-padding-vertical / 2) -@navbar-padding-horizontal;
+  
+    > li > a {
+      padding-top:    10px;
+      padding-bottom: 10px;
+      line-height: @line-height-computed;
+
+      color: @navbar-default-link-color;
+
+      &:hover,
+      &:focus {
+        color: @navbar-default-link-hover-color;
+        background-color: @navbar-default-link-hover-bg;
+      }
+    }
+
+    > .active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @navbar-default-link-active-color;
+        background-color: @navbar-default-link-active-bg;
+      }
+    }
+
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @navbar-default-link-disabled-color;
+        background-color: @navbar-default-link-disabled-bg;
+      }
+    }
+  
+    @media (max-width: @grid-float-breakpoint-max) {
+      // Dropdowns get custom display when collapsed
+      .open .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+        > li > a,
+        .dropdown-header {
+          padding: 5px 15px 5px 25px;
+        }
+        > li > a {
+          line-height: @line-height-computed;
+          &:hover,
+          &:focus {
+            background-image: none;
+          }
+        }
+      }
+    }
+  
+    // Uncollapse the nav
+    @media (min-width: @grid-float-breakpoint) {
+      float: left;
+      margin: 0;
+  
+      > li {
+        float: left;
+        > a {
+          padding-top:    @navbar-padding-vertical;
+          padding-bottom: @navbar-padding-vertical;
+        }
+      }
+  
+      &.navbar-right:last-child {
+        margin-right: -@navbar-padding-horizontal;
+      }
+    }
+  }
+  
+  
+  // Component alignment
+  //
+  // Repurpose the pull utilities as their own navbar utilities to avoid specificity
+  // issues with parents and chaining. Only do this when the navbar is uncollapsed
+  // though so that navbar contents properly stack and align in mobile.
+  
+  @media (min-width: @grid-float-breakpoint) {
+    .navbar-left  { float:left; }
+    .navbar-right { float:right; }
+  }
+
+  .navbar-btn {
+    .navbar-vertical-align(@input-height-base);
+  
+    &.haik-btn-sm {
+      .navbar-vertical-align(@input-height-small);
+    }
+    &.haik-btn-xs {
+      .navbar-vertical-align(22);
+    }
+  }
+
+}
+
+.haik-content {
+  margin-top: @navbar-height;
+}
+
+.haik-footer {
+  display: block;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 100px;
+  color: #777;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+  a {
+    color: @link-color;
+    text-decoration: none;
+  }
+}
+
+// editor
+.haik-editor {
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  .exnote-agwrapper {
+    textarea {
+      color: @gray;
+      height:450px;
+      min-height:100%;
+      border-width: 0;
+      outline: none;
+      
+      &:focus {
+        outline: none;
+      }
+    }
+
+    pre.exnote-agshadow{
+        min-height: 450px;
+    }
+  }
+}
+
+// haik-tools
+
+.haik-btn {
+  display: inline-block;
+  margin-bottom: 0; // For input.btn
+  font-weight: @btn-font-weight;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  white-space: nowrap;
+  .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
+  .user-select(none);
+
+  &,
+  &:active,
+  &.active {
+    &:focus {
+      .tab-focus();
+    }
+  }
+
+  &:hover,
+  &:focus {
+    color: @btn-default-color;
+    text-decoration: none;
+  }
+
+  &:active,
+  &.active {
+    outline: 0;
+    background-image: none;
+    .box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: not-allowed;
+    pointer-events: none; // Future-proof disabling of clicks
+    .opacity(.65);
+    .box-shadow(none);
+  }
+
+  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+}
+
+.haik-btn-link {
+  color: @link-color;
+  font-weight: normal;
+  cursor: pointer;
+  border-radius: 0;
+
+  &,
+  &:active,
+  &[disabled],
+  fieldset[disabled] & {
+    background-color: transparent;
+    .box-shadow(none);
+  }
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: transparent;
+  }
+  &:hover,
+  &:focus {
+    color: @link-hover-color;
+    text-decoration: none;
+    background-color: transparent;
+  }
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus {
+      color: @btn-link-disabled-color;
+      text-decoration: none;
+    }
+  }
+}
+
+.haik-btn-lg {
+  // line-height: ensure even-numbered height of button next to large input
+  .button-size(@padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @border-radius-large);
+}
+.haik-btn-sm {
+  // line-height: ensure proper height of button next to small input
+  .button-size(@padding-small-vertical; @padding-small-horizontal; @font-size-small; @line-height-small; @border-radius-small);
+}
+.haik-btn-xs {
+  .button-size(@padding-xs-vertical; @padding-xs-horizontal; @font-size-small; @line-height-small; @border-radius-small);
+}
+
+.haik-btn-default {
+  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+}
+.haik-btn-primary {
+  .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+}
+// Success appears as green
+.haik-btn-success {
+  .button-variant(@btn-success-color; @btn-success-bg; @btn-success-border);
+}
+// Info appears as blue-green
+.haik-btn-info {
+  .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+}
+// Warning appears as orange
+.haik-btn-warning {
+  .button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+}
+// Danger and error appear as red
+.haik-btn-danger {
+  .button-variant(@btn-danger-color; @btn-danger-bg; @btn-danger-border);
+}
+
+.haik-text-muted {
+  color: @gray-light;
+}
+.haik-text-primary {
+  color: @brand-primary;
+}
+.haik-text-info {
+  color: @brand-info;
+}
+.haik-text-success {
+  color: @brand-success;
+}
+.haik-text-warning {
+  color: @brand-warning;
+}
+.haik-text-danger {
+  color: @brand-danger;
+}
+
+
+.haik-text-left {
+  text-align: left;
+}
+.haik-text-right {
+  text-align: right;
+}
+.haik-text-center {
+  text-align: center;
+}
+
+
+.haik-pull-left {
+  float: left !important;
+}
+.haik-pull-right {
+  float: right !important;
+}
+
+.haik-mt-10 {
+  margin-top: 10px;
+}
+.haik-mt-30 {
+  margin-top: 30px;
+}
+
+.haik-mb-10 {
+  margin-bottom: 10px;
+}
+.haik-mb-30 {
+  margin-bottom: 30px;
+}
+
+
+// tools
+.exnote-agwrapper {
+  position:relative;
+
+  textarea {
+    width:100%;
+    min-height:100%;
+    display:block;
+    position:absolute;
+    font-size:14px;
+    line-height: 1.5em;
+    padding: 4px 6px;
+    resize: none;
+    height:100px;
+    box-sizing: border-box;
+  }
+
+  pre.exnote-agshadow{
+      padding: 4px 6px;
+      display:block;
+      min-height: 100px;
+      font-size:14px;
+      line-height: 1.5em;
+      padding-top: 2em;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+  }
+}
