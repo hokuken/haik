@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('McDaijiro.local'),
+	'local' => array('McDaijiro.local', 'mac-rmasamori.local'),
 
 ));
 
