@@ -51,8 +51,19 @@ class PageController extends BaseController {
         $page_data['messages'] = array(
             'edit_link' => $page_data['title'] . 'の編集'
         );
+        
 
-        return View::make('page.show', $page_data);
+        $theme_repository_path = storage_path() . '/themes';
+        View::addLocation($theme_repository_path);
+        View::addNamespace('themes', $theme_repository_path);
+
+        $theme = 'ikk';
+        $view = "themes::{$theme}.theme";
+
+        $page_data['theme']['css'] = url('haik-contents/themes/'.$theme.'/css/theme.css');
+
+
+        return View::make($view, $page_data);
     }
 
 }

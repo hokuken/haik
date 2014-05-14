@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    {{ html_style(theme.css) }}
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+  </head>
+  <body data-spy="scroll">
+    <!-- navigator -->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".theme-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">{{ site.title }}</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse theme-navbar">
+          {{ nav.content|raw }}
+<!--
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+-->
+        </div><!-- /.navbar-collapse -->
+
+      </div>
+    </nav>
+
+    <!-- contents -->
+    <div class="container-fluid" role="main">
+      {{ content|raw }}
+    </div>
+
+    <!-- footer -->
+    <footer>
+      {{ footer.content|raw }}
+    </footer>
+    
+    <!-- scripts -->
+    {{ html_script('//code.jquery.com/jquery.js') }}
+    {{ html_script('//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js') }}
+  </body>
+</html>
