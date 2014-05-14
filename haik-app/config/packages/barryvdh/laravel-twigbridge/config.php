@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Config;
+use Hokuken\Haik\Page\LayoutPage;
 
 return array(
 
@@ -73,7 +74,15 @@ return array(
     ),
     
     'functions' => array(
-
+        'layout_page' => array(
+            'is_safe' => array('html'),
+            'callback' => function($pagename)
+            {
+                $layout = LayoutPage::where('name', $pagename)->first();
+                if ($layout === null) return '';
+                return $layout->parseBody()->content;
+            }
+        ),
     ),
 
     'filters' => array(
