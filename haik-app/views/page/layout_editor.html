@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    {% block head %}
+      {{ html_style('assets/css/haik.css') }}
+      <title>{{ title }}</title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <!-- header -->
+    <header class="navbar navbar-fixed-top haik-navbar" role="banner">
+      <div class="haik-container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".haik-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="navbar-brand">Ha:k</a>
+        </div>
+        <nav class="collapse navbar-collapse haik-navbar-collapse" role="navigation">
+          {% block navbar %}{% endblock %}
+        </nav>
+      </div>
+    </header>
+    
+    <!-- content -->
+    <div id="content" class="haik-content" role="main">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- footer -->
+    <footer class="haik-footer">
+      {% block footer %}
+          &copy; Copyright 2014 by <a href="http://hokuken.com/">hokuken inc.</a>.
+      {% endblock %}
+    </footer>
+
+    <!-- scripts -->
+    {% block script %}
+      {{ html_script('//code.jquery.com/jquery.js') }}
+      {{ html_script('//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js') }}
+      {{ html_script('assets/js/haik.js') }}
+    {% endblock %}
+  </body>
+</html>
