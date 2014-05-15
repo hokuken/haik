@@ -63,7 +63,8 @@ class EditPageCommand extends Command {
         fwrite($fp, $body);
         fclose($fp);
 
-        shell_exec("vi $tmp_path > /dev/tty < /dev/tty");
+        $editor = $this->option('editor');
+        shell_exec("$editor $tmp_path > /dev/tty < /dev/tty");
 
         $data = file_get_contents($tmp_path);
 
@@ -108,7 +109,7 @@ class EditPageCommand extends Command {
 	protected function getOptions()
 	{
 		return array(
-//			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
+			array('editor', null, InputOption::VALUE_OPTIONAL, 'Editor command', 'vi'),
 		);
 	}
 
