@@ -19,11 +19,10 @@ class EditPluginController extends BaseController {
     public function showForm($page = '')
     {
         $page = $this->getPage($page);
-
         return View::make('page.edit', array(
             'page' => $page,
             'page_meta' => $page->meta->getAll(),
-            'page_meta_yml' => $page->meta->toYaml(),
+            'page_meta_yaml' => $page->meta->toYaml(),
         ));
     }
 
@@ -47,6 +46,10 @@ class EditPluginController extends BaseController {
         $page->body = Input::get('body', '');
         $page->body_version = $page->body_version + 1;
         $page->save();
+
+        $page_yaml = Input::get('page_meta_yaml', '');
+        $page->meta->setYaml($page_yaml)->save();
+
         return Redirect::route('show_page', $pagename);
     }
 

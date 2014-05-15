@@ -19,19 +19,19 @@
 {% block content %}
 
   <div class="haik-container">
+    <a href=".haik-page-meta" class="haik-page-meta-toggle" data-toggle="collapse"><i class="fa fa-cog fa-lg"></i></a>
 
-      {{ form_model(page, {'route': ['plugin.edit.post'], 'id': 'editForm'} ) }}
+    {{ form_model(page, {'route': ['plugin.edit.post'], 'id': 'editForm'} ) }} 
+      <div class="haik-page-meta collapse">
+        {{ form_textarea('page_meta_yaml', page_meta_yaml, {placeholder:'ここにページ情報', 'data-exnote':'onready'}) }}
+      </div>
 
-        <div class="haik-page-meta">
-          {{ form_textarea('page_meta_yml', page_meta_yml, {'data-exnote':'onready', 'placeholder':'ここにページ情報'}) }}
-        </div>
-
-    <div class="haik-editor">
-        {{ form_textarea('body', body, {'data-exnote':'onready', 'placeholder':'ここに本文'}) }}
-        {{ form_hidden('name') }}
-        {{ form_hidden('body_version') }}
-      {{ form_close() }}
-    </div>
+      <div class="haik-editor">
+          {{ form_textarea('body', body, {placeholder:'ここに本文', 'data-exnote':'onready'}) }}
+          {{ form_hidden('name') }}
+          {{ form_hidden('body_version') }}
+      </div>
+    {{ form_close() }}
 
   </div>
 
