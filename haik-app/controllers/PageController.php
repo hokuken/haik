@@ -34,7 +34,7 @@ class PageController extends BaseController {
         $page = App::make('page.current');
 
         $page_data = array(
-            'title' => $page->name
+            'title' => $this->getTitle(),
         );
 
         // Merge page meta data
@@ -78,6 +78,27 @@ class PageController extends BaseController {
         $view = "themes::{$theme}.theme";
 
         return View::make($view, $page_data);
+    }
+    
+    protected function getTitle()
+    {
+        $page = App::make('page.current');
+        
+        $page_title = $page->meta->get('title', $page->name);
+        $site_title = Site::get('site.title', '');
+
+        if ($page->name === Config::get('haik.page.default'))
+        {
+            // 
+            $page_title = ($page_title !== $page->name) ? $page_title : $site_title;
+        }
+        else
+        {
+            $page_title = $page_title . ' - ' . $site_title;
+        }
+        
+        return $page_title;
+      
     }
 
 }
