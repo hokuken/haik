@@ -2,6 +2,7 @@
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
+use Hokuken\Haik\Support\DataBag;
 
 class PageController extends BaseController {
 
@@ -33,17 +34,14 @@ class PageController extends BaseController {
     {
         $page = App::make('page.current');
 
-        $page_data = array(
-            'title' => $page->name
-        );
+        $page_data = new DataBag( array(
+            'site' => Site::getAll(),
+            'title' => $this->getTitle(),
+        ));
 
         // Merge page meta data
         $page_meta = $page->meta;
-        foreach (array_dot($page_meta->getAll()) as $key => $value)
-        {
-            $key = str_replace('.', '_', $key);
-            $page_data[$key] = $value;
-        }
+        $page_data->setAll($page_meta->getAll());
 
         // Parse body to HTML
         $page->parseBody();
@@ -54,13 +52,12 @@ class PageController extends BaseController {
         $page_data['messages'] = array(
             'edit_link' => $page_data['title'] . 'の編集'
         );
-        
 
         $theme_repository_path = storage_path() . '/themes';
         View::addLocation($theme_repository_path);
         View::addNamespace('themes', $theme_repository_path);
 
-        $theme = 'ikk';
+        $theme = $page->meta->get('theme.name', Site::get('theme.name'));
         $theme_path = $theme_repository_path . '/' . $theme;
 
         // Read theme config from theme.yml
@@ -71,13 +68,44 @@ class PageController extends BaseController {
         catch (ParseException $e) {
             $theme_config = array();
         }
+
         $theme_config['base_url'] = url('haik-contents/themes/'.$theme);
         $theme_config['css'] = $theme_config['base_url'].'/'.$theme_config['css'];
+
         $page_data['theme'] = $theme_config;
+        
+        $theme_template_name = $page->meta->get('theme.template', 'default');
+        if (isset($theme_config['templates'][$theme_template_name]['filename']) && 
+              file_exists($theme_path.'/'.$theme_config['templates'][$theme_template_name]['filename']))
+        {
+            $view = "themes::{$theme}." . basename($theme_config['templates'][$theme_template_name]['filename'], '.html');
+        }
+        else
+        {
+            $view = "themes::{$theme}.theme";
+        }
 
-        $view = "themes::{$theme}.theme";
+        return View::make($view, $page_data->getAll());
+    }
+    
+    protected function getTitle()
+    {
+        $page = App::make('page.current');
+        
+        $page_title = $page->meta->get('title', $page->name);
+        $site_title = Site::get('title', '');
 
-        return View::make($view, $page_data);
+        if ($page->name === Config::get('haik.page.default'))
+        {
+            // if default page set page title of page meta first
+            $page_title = ($page_title !== $page->name) ? $page_title : $site_title;
+        }
+        else
+        {
+            $page_title = $page_title . ' - ' . $site_title;
+        }
+        
+        return $page_title;
     }
 
 }
