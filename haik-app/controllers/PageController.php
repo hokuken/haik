@@ -89,7 +89,7 @@ class PageController extends BaseController {
 
         if ($page->name === Config::get('haik.page.default'))
         {
-            // 
+            // if default page set page title of page meta first
             $page_title = ($page_title !== $page->name) ? $page_title : $site_title;
         }
         else
@@ -98,7 +98,6 @@ class PageController extends BaseController {
         }
         
         return $page_title;
-      
     }
 
 }
