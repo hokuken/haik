@@ -342,9 +342,10 @@ body {
 }
 
 // editor
+//------------
 .haik-editor {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 15px;
+  padding-bottom: 10px;
 
   .exnote-agwrapper {
     textarea {
@@ -363,7 +364,82 @@ body {
         min-height: 450px;
     }
   }
+  
+  .haik-plugin-buttons {
+    .clearfix();
+    
+    &.affix {
+      top: 60px;
+      z-index: 200;
+    }
+    
+    .haik-plugin-button-group {
+      display: block;
+      float: left;
+      margin-right: 15px;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+      
+      .haik-btn-default {
+        color: #666;
+      }
+    }
+  }
+  
 }
+
+.haik-page-meta-toggle {
+  position: absolute;
+  right: 30px;
+  top: 60px;
+  z-index: 100;
+  color: #333;
+  
+}
+.haik-page-meta {
+  padding: 5px;
+  .exnote-agwrapper {
+    color: @gray-lighter;
+    background-color: @gray;
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 3px 0 3px 3px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -3px;
+      border-top: 7px solid @gray;
+      border-right: 3px solid transparent;
+
+    }
+
+    textarea {
+      color: #fff;
+      height:100px;
+      min-height:100%;
+      background-color: @gray;
+      outline: none;
+      border-width: 0;
+      padding: 15px;
+      
+      &:focus {
+        outline: none;
+        border-width: 0;
+      }
+    }
+
+    pre.exnote-agshadow{
+        min-height: 100px;
+    }
+  }
+}
+
+
 
 // haik-tools
 
@@ -377,6 +453,7 @@ body {
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
   border: 1px solid transparent;
   white-space: nowrap;
+  text-decoration: none;
   .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
   .user-select(none);
 
@@ -554,13 +631,40 @@ body {
   }
 
   pre.exnote-agshadow{
-      padding: 4px 6px;
-      display:block;
-      min-height: 100px;
-      font-size:14px;
-      line-height: 1.5em;
-      padding-top: 2em;
-      white-space: pre-wrap;
-      word-wrap: break-word;
+    padding: 4px 6px;
+    display:block;
+    min-height: 100px;
+    font-size:14px;
+    line-height: 1.5em;
+    padding-top: 2em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
+}
+
+.fade {
+  opacity: 0;
+  .transition(opacity .15s linear);
+  &.in {
+    opacity: 1;
+  }
+}
+
+.collapse {
+  display: none;
+
+  &.in {
+    display: block;
+  }
+}
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  .transition(height .1s ease);
+}
+
+.affix {
+  position: fixed;
 }

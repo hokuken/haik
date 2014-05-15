@@ -27,7 +27,7 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
     
         $this->page = $page;
         if ($set_data)
-            $this->data = $this->read();
+            $this->read();
     }
 
     /**
@@ -93,6 +93,23 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
         return $this;
     }
 
+    /**
+     * Set YAML to meta data
+     *
+     * @param string $yaml yaml
+     * @return $this
+     */
+    public function setYaml($yaml)
+    {
+        try {
+            $this->setAll(Yaml::parse($yaml), true);
+        }
+        catch (ParseException $e) {
+        
+        }
+        
+        return $this;
+    }
 
     /**
      * Get all meta data as YAML
@@ -101,7 +118,13 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
      */
     public function toYaml()
     {
-        return Yaml::dump($this->getAll(), 2);
+        $data = $this->getAll();
+        if (count($data) === 0)
+        {
+            return '';
+        }
+
+        return Yaml::dump($data, 2);
     }
 
 }
