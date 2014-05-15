@@ -1,4 +1,4 @@
-{% extends "page.layout_editor.html" %}
+{% extends "page.layout_editor" %}
 
 {% set title = page.name ~ "の編集" %}
 
@@ -27,7 +27,10 @@
       </div>
 
       <div class="haik-editor">
-          {{ form_textarea('body', body, {placeholder:'ここに本文', 'data-exnote':'onready'}) }}
+
+      {% include "page.plugin_buttons" %}
+      
+          {{ form_textarea('body', body, {id:'haik_msg', placeholder:'ここに本文', 'data-exnote':'onready'}) }}
           {{ form_hidden('name') }}
           {{ form_hidden('body_version') }}
       </div>
@@ -39,11 +42,27 @@
 
 {% block script %}
   {{ parent() }}
+
   <script>
     $(function(){
       $("[data-edit-type=write]").on('click', function(){
         $("#editForm").submit();
       });
+      
+      $(".haik-plugin-buttons a[data-name]").each(function(){
+          var name = $(this).data('name');
+
+          if (typeof haik.plugins[name] != "undefined") {
+            $(this).text(haik.plugins[name].label);
+            haik.PluginHelper.init($(this));
+          }
+          else
+          {
+            $(this).remove();
+          }
+      });
+      
+      
     });
   </script>
 {% endblock %}
