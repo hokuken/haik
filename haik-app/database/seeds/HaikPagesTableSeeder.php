@@ -22,7 +22,6 @@ class HaikPagesTableSeeder extends Seeder {
 ::: nav
 * Item: #
 * Item: #
-{.navbar-right}
 :::
 ',
         ));
