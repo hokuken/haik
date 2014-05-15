@@ -21,7 +21,9 @@ class EditPluginController extends BaseController {
         $page = $this->getPage($page);
 
         return View::make('page.edit', array(
-            'page' => $page
+            'page' => $page,
+            'page_meta' => $page->meta->getAll(),
+            'page_meta_yml' => $page->meta->toYaml(),
         ));
     }
 

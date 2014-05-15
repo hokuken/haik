@@ -1,6 +1,5 @@
 {% extends "page.layout_editor.html" %}
 
-
 {% set title = page.name ~ "の編集" %}
 
 {% block head %}
@@ -20,13 +19,20 @@
 {% block content %}
 
   <div class="haik-container">
-    <div class="haik-editor">
+
       {{ form_model(page, {'route': ['plugin.edit.post'], 'id': 'editForm'} ) }}
-          {{ form_textarea('body', body, {'data-exnote':'onready', 'placeholder':'ここに本文'}) }}
-          {{ form_hidden('name') }}
-          {{ form_hidden('body_version') }}
+
+        <div class="haik-page-meta">
+          {{ form_textarea('page_meta_yml', page_meta_yml, {'data-exnote':'onready', 'placeholder':'ここにページ情報'}) }}
+        </div>
+
+    <div class="haik-editor">
+        {{ form_textarea('body', body, {'data-exnote':'onready', 'placeholder':'ここに本文'}) }}
+        {{ form_hidden('name') }}
+        {{ form_hidden('body_version') }}
       {{ form_close() }}
     </div>
+
   </div>
 
 {% endblock %}

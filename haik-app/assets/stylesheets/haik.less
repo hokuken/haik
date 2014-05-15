@@ -343,8 +343,8 @@ body {
 
 // editor
 .haik-editor {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 0;
+  padding-bottom: 20px;
 
   .exnote-agwrapper {
     textarea {
@@ -364,6 +364,31 @@ body {
     }
   }
 }
+
+.haik-page-meta {
+  padding-top: 30px;
+  padding-bottom: 20px;
+
+  .exnote-agwrapper {
+    textarea {
+      color: @gray;
+      height:100px;
+      min-height:100%;
+      border-width: 0;
+      outline: none;
+      
+      &:focus {
+        outline: none;
+      }
+    }
+
+    pre.exnote-agshadow{
+        min-height: 100px;
+    }
+  }
+}
+
+
 
 // haik-tools
 
