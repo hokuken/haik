@@ -1,11 +1,14 @@
 <?php
-use Hokuken\Haik\Plugin\Nav\NavParser;
+use Hokuken\Haik\Plugin\Nav\Parser\NavParser;
+use Hokuken\Haik\Plugin\Nav\Parser\PluginRepository;
 
 class NavParserTest extends TestCase {
 
     public function setUp()
     {
         $parser = new NavParser();
+        $plugin_repo = new PluginRepository($parser);
+        $parser->registerPluginRepository($plugin_repo);
         $this->parser = $parser;
     }
 
@@ -157,6 +160,37 @@ Text 3
                 'attributes' => array(
                     'class' => 'dropdown-menu'
                 ),
+            ),
+        );
+        $this->assertTag($expected, $result);
+    }
+
+    public function testButton()
+    {
+        $markdown = '
+::: button URL :::
+';
+        $result = $this->parser->transform($markdown);
+        $expected = array(
+            'tag' => 'a',
+            'attributes' => array(
+                'class' => 'btn btn-default navbar-btn',
+            ),
+        );
+        $this->assertTag($expected, $result);
+    }
+
+    public function testText()
+    {
+        $markdown = '
+Text
+Text
+';
+        $result = $this->parser->transform($markdown);
+        $expected = array(
+            'tag' => 'p',
+            'attributes' => array(
+                'class' => 'navbar-text',
             ),
         );
         $this->assertTag($expected, $result);

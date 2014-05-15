@@ -1,5 +1,5 @@
 <?php
-namespace Hokuken\Haik\Plugin\Nav;
+namespace Hokuken\Haik\Plugin\Nav\Parser;
 
 use Hokuken\Haik\Markdown\HaikMarkdown;
 
@@ -12,23 +12,23 @@ class NavParser extends HaikMarkdown {
         $this->hardWrap = false;
 
         $this->document_gamut = array(
-            'doConvertPlugins'     => 27,
-            "runBasicBlockGamut"   => 30,
+            'doConvertPlugins'      => 27,
+            "runBasicBlockGamut"    => 30,
         );
 
         $this->block_gamut = array(
-            'doConvertPlugins'  => 10,
-            "doLists"           => 40,
+            'doConvertPlugins'      => 10,
+            "doLists"               => 40,
         );
 
         $this->span_gamut = array(
-            "parseSpan"           => -30,
-            'doInlinePlugins'     =>   2,
-            "doImages"            =>  10,
-            "doAnchors"           =>  20,
-            "encodeAmpsAndAngles" =>  40,
-            "doItalicsAndBold"    =>  50,
-            "doHardBreaks"        =>  60,
+            "parseSpan"            => -30,
+            'doInlinePlugins'      =>   2,
+            "doImages"             =>  10,
+            "doAnchors"            =>  20,
+            "encodeAmpsAndAngles"  =>  40,
+            "doItalicsAndBold"     =>  50,
+            "doHardBreaks"         =>  60,
         );
     }
 
@@ -263,7 +263,7 @@ class NavParser extends HaikMarkdown {
 			if (!preg_match('/^B\x1A[0-9]+B$/', $value)) {
 				# Is a paragraph.
 				$value = $this->runSpanGamut($value);
-                $value = preg_replace('/^([ ]*)/', "<p>", $value);
+                $value = preg_replace('/^([ ]*)/', '<p class="navbar-text">', $value);
                 $value .= "</p>";
 				$grafs[$key] = $this->unhash($value);
 			}
