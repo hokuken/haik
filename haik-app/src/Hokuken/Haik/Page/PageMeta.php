@@ -101,7 +101,13 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
      */
     public function toYaml()
     {
-        return Yaml::dump($this->getAll(), 2);
+        $data = $this->getAll();
+        if (count($data) === 0)
+        {
+            return '';
+        }
+
+        return Yaml::dump($data, 2);
     }
 
 }
