@@ -62,7 +62,6 @@ class EditPageCommand extends Command {
         $fp = fopen($tmp_path, 'w');
         fwrite($fp, $body);
         fclose($fp);
-//        file_put_contents($tmp_path, $body);
 
         shell_exec("vi $tmp_path > /dev/tty < /dev/tty");
 
