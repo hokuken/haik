@@ -84,41 +84,6 @@ Text 3
         $this->assertTag($expected, $result);
     }
 
-    public function testSpecialAttributeAfterParagraph()
-    {
-        $markdown = '
-Text {.class-name}
-';
-        $result = $this->parser->transform($markdown);
-        $expected = array(
-            'tag' => 'p',
-            'attributes' => array(
-                'class' => 'class-name'
-            )
-        );
-
-        $this->assertTag($expected, $result);
-    }
-
-    public function testSpecialAttributeAfterList()
-    {
-        $markdown = '
-* Item: URL
-* Item: URL
-* Item: URL
-{.class-name}
-';
-        $result = $this->parser->transform($markdown);
-        $expected = array(
-            'tag' => 'ul',
-            'attributes' => array(
-                'class' => 'class-name'
-            )
-        );
-
-        $this->assertTag($expected, $result);
-    }
-
     public function testNestedList()
     {
         $markdown = '
@@ -168,6 +133,32 @@ Text {.class-name}
             ),
         );
 
+        $this->assertTag($expected, $result);
+    }
+
+    public function testNestedListContainsDivider()
+    {
+        $markdown = '
+* Item: URL
+* Item
+    * SubItem: URL
+    * ---
+    * SubItem: URL
+';
+        $result = $this->parser->transform($markdown);
+        $expected = array(
+            'tag' => 'li',
+            'attributes' => array(
+                'class' => 'divider'
+            ),
+            'content' => '',
+            'parent' => array(
+                'tag' => 'ul',
+                'attributes' => array(
+                    'class' => 'dropdown-menu'
+                ),
+            ),
+        );
         $this->assertTag($expected, $result);
     }
 

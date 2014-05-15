@@ -89,8 +89,6 @@ class NavParser extends HaikMarkdown {
 
     protected $first_level_list_default_attr = '.nav .navbar-nav';
 
-    protected $first_level_list_attr = '';
-
     protected $second_level_list_attr = '.dropdown-menu';
 
 	protected function _doLists_callback($matches) {
@@ -103,14 +101,13 @@ class NavParser extends HaikMarkdown {
         $attr = '';
         if ($this->list_level === 0)
         {
-            $attr = $this->first_level_list_default_attr . ' ' . $this->first_level_list_attr;
-            $attr = $this->doExtraAttributes('ul', $attr);
+            $attr = $this->first_level_list_default_attr;
         }
         else if ($this->list_level === 1)
         {
             $attr = $this->second_level_list_attr;
-            $attr = $this->doExtraAttributes('ul', $attr);
         }
+        $attr = $this->doExtraAttributes('ul', $attr);
 		$result = $this->hashBlock("<ul{$attr}>\n" . $result . "</ul>");
 		return "\n". $result ."\n\n";
 	}
@@ -161,13 +158,14 @@ class NavParser extends HaikMarkdown {
 		$this->list_level--;
 		return $list_str;
 	}
+
 	protected function _processListItems_callback($matches) {
 		$item = $matches[4];
 		$leading_line =& $matches[1];
 		$leading_space =& $matches[2];
 		$marker_space = $matches[3];
 		$tailing_blank_line =& $matches[5];
-		$trigger_item = false;
+        $attr = '';
 
 		if ($leading_line || $tailing_blank_line || 
 			preg_match('/\n{2,}/', $item))
@@ -181,24 +179,20 @@ class NavParser extends HaikMarkdown {
 			$item = $this->doLists($this->outdent($item));
 		    if (strpos($item, "\n") === false)
 		    {
-    		    $item = $this->_parseListItemAsLink($item);
-		    }
-		    else if (preg_match('/
-		        \n
-    			(?:[ ]* '.$this->id_class_attr_catch_re.' )? # $1: special attributes
-    			(?:\n|\z)
-		    /x', $item, $mts) && isset($mts[1]))
-		    {
-    		    list($item) = explode("\n", $item, 2);
-    		    $item = $this->_parseListItemAsLink($item);
-    		    $attr = $mts[1];
-    		    $this->first_level_list_attr = $attr;
+		        if (preg_match('/[ ]* -{3,} [ ]*/x', $item))
+		        {
+                    $attr = ' class="divider"';
+                    $item = '';
+		        }
+		        else
+		        {
+                    $item = $this->_parseListItemAsLink($item);
+		        }
 		    }
 		    else
 		    {
     			$item = preg_replace('/\n+$/', '', $item);
     			$item = $this->runSpanGamut($item);
-    			$trigger_item = true;
                 $item = preg_replace_callback('/
                     (.+?)   # $1: dropdown toggle trigger
                     (       # $2
@@ -208,14 +202,10 @@ class NavParser extends HaikMarkdown {
                     )
                 /x',
                 array(&$this, '_dropdownTrigger_callback'), $item);
+                $attr = ' class="dropdown"';
 		    }
 		}
 
-        $attr = '';
-        if ($trigger_item)
-        {
-            $attr = ' class="dropdown"';
-        }
 		return "<li{$attr}>" . $item . "</li>\n";
 	}
 
@@ -273,15 +263,8 @@ class NavParser extends HaikMarkdown {
 			if (!preg_match('/^B\x1A[0-9]+B$/', $value)) {
 				# Is a paragraph.
 				$value = $this->runSpanGamut($value);
-				
-				$value = preg_replace_callback('/
-                    (                 # $1 = whole match
-    				    ^(?:[ ]*)
-    				    (.*?)         # $2 = paragraph content
-                        (?:[ ]? '.$this->id_class_attr_catch_re.' )?	 # $3 = id or class attributes
-                        (?:\n|\z)
-    				 )   
-    				/x', array(&$this, '_formParagraph_callback'), $value);
+                $value = preg_replace('/^([ ]*)/', "<p>", $value);
+                $value .= "</p>";
 				$grafs[$key] = $this->unhash($value);
 			}
 			else {
@@ -296,15 +279,5 @@ class NavParser extends HaikMarkdown {
 
 		return implode("\n\n", $grafs);
 	}
-
-    protected $paragraph_attr = '.navbar-text';
-
-    protected function _formParagraph_callback($matches)
-    {
-        $attr = $this->paragraph_attr . (isset($matches[3]) ? $matches[3] : '');
-		$attr  = $this->doExtraAttributes("p", $attr);
-        $content = '<p'.$attr.'>' . $matches[2] . '</p>';
-        return $content;
-    }
 
 }
