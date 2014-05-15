@@ -36,7 +36,6 @@ class PageController extends BaseController {
 
         $page_data = new DataBag( array(
             'site' => Site::getAll(),
-            'title' => $this->getTitle(),
         ));
 
         // Merge page meta data
@@ -48,7 +47,8 @@ class PageController extends BaseController {
         $page_data['page'] = $page->name;
         $page_data['content'] = $page->content;
         $page_data['updated_at'] = $page->updated_at->format('Y年m月d日');
-
+        $page_data['title'] = $this->getTitle();
+        
         $page_data['messages'] = array(
             'edit_link' => $page_data['title'] . 'の編集'
         );
@@ -94,7 +94,6 @@ class PageController extends BaseController {
         
         $page_title = $page->meta->get('title', $page->name);
         $site_title = Site::get('title', '');
-
         if ($page->name === Config::get('haik.page.default'))
         {
             // if default page set page title of page meta first
