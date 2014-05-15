@@ -82,8 +82,8 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
         $this->removedFragments = new DataBag();
 
         $model = $this->model;
-        
-        $fragments = $model::where('haik_page_id', '=', $this->page->id);
+
+        $fragments = $model::where('haik_page_id', '=', $this->page->id)->get();
 
         foreach ($fragments as $fragment)
         {
