@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('HaikUsersTableSeeder');
 		$this->call('HaikPagesTableSeeder');
 		$this->call('HaikPageMetaFragmentsTableSeeder');
+		$this->call('HaikConfigFragmentsTableSeeder');
 	}
 
 }
