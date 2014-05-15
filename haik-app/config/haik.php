@@ -11,4 +11,7 @@ return array(
         'default' => 'FrontPage'
     ),
 
+    'markdown' => array(
+        'hardWrap' => false
+    ),
 );
