@@ -5,6 +5,7 @@ use Page;
 use PageMetaFragment;
 use Symfony\Component\Yaml\Yaml;
 use Hokuken\Haik\Support\FragmentBag;
+use Hokuken\Haik\Support\DataBag;
 
 class PageMeta extends FragmentBag implements PageMetaInterface {
 
@@ -19,9 +20,12 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
      */
     public function __construct(Page $page, $set_data = true)
     {
-        parent::__construct();
-        $this->page = $page;
+        $this->container = array();
 
+        $this->removedFragments = new DataBag();
+        $this->setModel();
+    
+        $this->page = $page;
         if ($set_data)
             $this->data = $this->read();
     }
@@ -66,6 +70,29 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
     {
         return $this->page;
     }
+
+    /**
+     * Read meta data of the page
+     *
+     * @return $this for method chain
+     */
+    public function read()
+    {
+        $this->removeAll();
+        $this->removedFragments = new DataBag();
+
+        $model = $this->model;
+        
+        $fragments = $model::where('haik_page_id', '=', $this->page->id);
+
+        foreach ($fragments as $fragment)
+        {
+            $this->setFragment($fragment->key, $fragment);
+        }
+
+        return $this;
+    }
+
 
     /**
      * Get all meta data as YAML
