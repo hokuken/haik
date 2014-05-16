@@ -101,6 +101,8 @@ class PageMeta extends FragmentBag implements PageMetaInterface {
      */
     public function setYaml($yaml)
     {
+        if ($yaml === '') return $this;
+
         try {
             $this->setAll(Yaml::parse($yaml), true);
         }
