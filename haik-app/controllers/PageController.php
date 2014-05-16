@@ -66,7 +66,7 @@ class PageController extends BaseController {
             'edit_link' => $page_data['title'] . 'の編集'
         );
 
-        $theme = $page->meta->get('theme.name', Site::get('theme.name'));
+        $theme = $page->meta->get('theme.name', Site::get('theme.name', Config::get('haik.theme.default')));
         $theme_path = $theme_repository_path . '/' . $theme;
 
         // Read theme config from theme.yml

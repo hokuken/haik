@@ -14,4 +14,8 @@ return array(
     'markdown' => array(
         'hardWrap' => false
     ),
+
+    'theme' => array(
+        'default' => 'ikk'
+    ),
 );
