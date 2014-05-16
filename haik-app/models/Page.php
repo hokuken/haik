@@ -6,6 +6,30 @@ class Page extends Eloquent {
     protected $bodyIsParsed = false;
     protected $content = '';
 
+    public static function boot()
+    {
+        parent::boot();
+
+        // Clear cache on save
+        static::saved(function($page)
+        {
+            $cache_key = $page->getCacheKey();
+            if (Cache::has($cache_key))
+            {
+                Cache::forget($cache_key);
+            }
+        });
+    }
+
+    public function getCacheKey()
+    {
+        if ( ! $this->exists)
+        {
+            throw new \RuntimeException("This page is not exist: {$this->name}");
+        }
+        return "page.data:{$this->id}";
+    }
+
     /**
      * Parse body to HTML
      *

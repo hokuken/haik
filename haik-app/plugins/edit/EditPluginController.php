@@ -1,10 +1,11 @@
 <?php
 namespace Hokuken\Haik\Plugin\Edit;
 
+use Cache;
 use Config;
-use View;
 use Input;
 use Redirect;
+use View;
 use BaseController;
 use Page;
 

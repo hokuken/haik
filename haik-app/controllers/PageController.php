@@ -38,7 +38,7 @@ class PageController extends BaseController {
         View::addNamespace('themes', $theme_repository_path);
 
         $page = App::make('page.current');
-        $cache_key = "page.data:{$page->id}";
+        $cache_key = $page->getCacheKey();
 
         if (Cache::has($cache_key))
         {
