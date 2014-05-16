@@ -3,6 +3,8 @@ class Page extends Eloquent {
 
     protected $table = 'haik_pages';
 
+    protected $softDelete = true;
+
     protected $bodyIsParsed = false;
     protected $content = '';
 
@@ -10,15 +12,19 @@ class Page extends Eloquent {
     {
         parent::boot();
 
-        // Clear cache on save
-        static::saved(function($page)
+        $forget_cache = function($page)
         {
             $cache_key = $page->getCacheKey();
             if (Cache::has($cache_key))
             {
                 Cache::forget($cache_key);
             }
-        });
+        };
+
+        // Forget cache on save
+        static::saved($forget_cache);
+        static::deleting($forget_cache);
+        static::restored($forget_cache);
     }
 
     public function getCacheKey()
