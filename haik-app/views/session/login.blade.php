@@ -17,6 +17,7 @@
             {{ Form::password('password') }}
             <br>
             {{ Form::submit('ログイン'); }}
+            {{ Form::checkbox('remember', 1, true) }} {{ Form::label('remember', 'Remember Me') }}
         {{ Form::close() }}
   </body>
 </html>
