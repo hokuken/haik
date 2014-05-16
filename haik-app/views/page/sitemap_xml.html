@@ -5,6 +5,6 @@
   <loc>{% if page.name == haik.page.default %}{{ route('show_page', '') }}{% else %}{{ route('show_page', page.name) }}{% endif %}</loc>
   <lastmod>{{ page.updated_at.format('Y-m-d') }}</lastmod>
   <changefreq>daily</changefreq>
-  <priority>1.0</priority>
+  <priority>{{ page.priority }}</priority>
 </url>
 {% endfor %}

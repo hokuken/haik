@@ -38,7 +38,14 @@ class PageListPluginController extends BaseController {
      */
     public function siteMap()
     {
-        $pages = $this->getPages();
+        $pages = array();
+
+        foreach ($this->getPages() as $i => $page)
+        {
+            $pages[$i] = $page->toArray();
+            $pages[$i]['priority'] = $page->getPriorityForSiteMap();
+        }
+
         return View::make('page.sitemap_xml')->with(array(
             'haik'  => Config::get('haik'),
             'pages' => $pages
