@@ -6,13 +6,19 @@
 */
 $controller = 'Hokuken\Haik\Plugin\PageList\PageListPluginController';
 
-Route::group(array('prefix' => 'cmd/list'), function($routes) use ($controller)
+Route::group(array('prefix' => 'cmd'), function($routes) use ($controller)
 {
-    Route::get('/', array(
+    Route::get('list', array(
             'uses' => $controller.'@show',
             'as' => 'plugin.list'
         )
     );
+
+    Route::get('list.{format}', array(
+            'uses' => $controller. '@show',
+            'as' => 'plugin.list'
+        )
+    )->where('format', 'json');
 });
 
 /*

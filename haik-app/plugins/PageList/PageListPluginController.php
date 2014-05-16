@@ -3,6 +3,7 @@ namespace Hokuken\Haik\Plugin\PageList;
 
 use BaseController;
 use Config;
+use Response;
 use View;
 use Page;
 use Site;
@@ -18,11 +19,17 @@ class PageListPluginController extends BaseController {
     /**
      * Show page list
      *
+     * @param string $format html or json
      * @return View
      */
-    public function show()
+    public function show($format = 'html')
     {
         $pages = $this->getPages();
+
+        if ($format === 'json')
+        {
+            return Response::json($pages->toArray());
+        }
 
         return View::make('page.list')->with(array(
             'haik'  => Config::get('haik'),
