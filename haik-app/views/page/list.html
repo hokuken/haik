@@ -1,0 +1,46 @@
+{% extends "page.layout_editor" %}
+
+{% set title = site.title ~ "のページ一覧" %}
+
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+
+{% block navbar %}
+
+<div class="nav navbar-nav navbar-right">
+  <a href="{{ route('show_page', '') }}" class="navbar-btn haik-btn haik-btn-sm haik-btn-link haik-text-muted">キャンセル</a>
+</div>
+
+{% endblock%}
+
+
+{% block content %}
+
+  <div class="haik-container">
+
+    <h1>{{ site.title ~ "のページ一覧" }}</h1>
+
+    {% for page in pages %}
+      <h4>
+        {{page.name}}
+        {% if page.meta.has('title') %}
+          | {{ page.meta.title }}
+        {% endif %}
+      </h4>
+      {{ link_to_route('show_page', '表示', page.name) }}
+      | {{ link_to_route('plugin.edit', '編集', page.name) }}
+      {% if page.name != haik.page.default %}
+      | {{ link_to_route('plugin.edit.delete', '削除', page.name) }}
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  {{ parent() }}
+{% endblock %}
+
+
