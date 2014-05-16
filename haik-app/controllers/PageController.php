@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Hokuken\Haik\Support\DataBag;
@@ -32,7 +33,19 @@ class PageController extends BaseController {
 
     protected function render()
     {
+        $theme_repository_path = storage_path() . '/themes';
+        View::addLocation($theme_repository_path);
+        View::addNamespace('themes', $theme_repository_path);
+
         $page = App::make('page.current');
+        $cache_key = $page->getCacheKey();
+
+        if (Cache::has($cache_key))
+        {
+            $data = Cache::get($cache_key);
+            $view = $data['view'];
+            return View::make($view, $data);
+        }
 
         $page_data = new DataBag( array(
             'site' => Site::getAll(),
@@ -52,10 +65,6 @@ class PageController extends BaseController {
         $page_data['messages'] = array(
             'edit_link' => $page_data['title'] . 'の編集'
         );
-
-        $theme_repository_path = storage_path() . '/themes';
-        View::addLocation($theme_repository_path);
-        View::addNamespace('themes', $theme_repository_path);
 
         $theme = $page->meta->get('theme.name', Site::get('theme.name'));
         $theme_path = $theme_repository_path . '/' . $theme;
@@ -84,8 +93,14 @@ class PageController extends BaseController {
         {
             $view = "themes::{$theme}.theme";
         }
+        $page_data['view'] = $view;
 
-        return View::make($view, $page_data->getAll());
+        // Cache page data
+        $data = $page_data->getAll();
+        $expiresAt = Carbon::now()->addDay();
+        Cache::add($cache_key, $data, $expiresAt);
+
+        return View::make($view, $data);
     }
     
     protected function getTitle()
