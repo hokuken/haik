@@ -20,7 +20,6 @@ class CreateFilesTable extends Migration {
             $table->string('type');
             $table->string('mime_type')->nullable();
             $table->integer('size')->unsigined()->default(0);
-            $table->string('dimensions')->nullable();
             $table->boolean('starred')->default(false);
             $table->boolean('publicity')->default(true);
             $table->text('note')->nullable();
