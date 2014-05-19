@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }}</title>
-    {{ html_style(theme.css) }}
+    {% for style in styles %}
+      {{ html_style(style) }}
+    {% endfor %}
     <meta name="author" content="{{ site.author }}">
     <meta name="description" content="{{ description }}">
   </head>
@@ -44,7 +46,9 @@
     </footer>
     
     <!-- scripts -->
-    {{ html_script('//code.jquery.com/jquery.js') }}
-    {{ html_script('//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js') }}
+    {% for script in scripts %}
+      {{ html_script(script) }}
+    {% endfor %}
+
   </body>
 </html>

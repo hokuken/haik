@@ -7,7 +7,9 @@
 }
 
 body {
-  font-size: 14px;  
+  font-size: 14px;
+  height: 100%;
+
 }
 
 .haik-container {
@@ -169,6 +171,7 @@ body {
   
     // Bars
     .icon-bar {
+      background-color: #888888;
       display: block;
       width: 22px;
       height: 2px;
@@ -667,4 +670,96 @@ body {
 
 .affix {
   position: fixed;
+}
+
+
+//sidr
+// Fonts
+@sidr-font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+@sidr-font-size: 15px;
+
+// Colors
+@sidr-background : #333;
+@sidr-background-shadow-color : #222;
+@sidr-text-color: #fff;
+@sidr-text-hover-color: #ccc;
+
+.sidr {
+  /* Default Settings */
+  display: none;
+  position: absolute;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  z-index: 999999;
+  width: 260px;
+  overflow-x: none;
+  overflow-y: auto;
+
+  .sidr-inner {
+      padding: 0 0 15px;
+
+      > p {
+          margin-left: 15px;
+          margin-right: 15px;
+      }
+  }
+
+  &.right {
+      left: auto;
+      right: -260px;
+  }
+
+  &.left {
+      left: -260px;
+      right: auto;
+  }
+
+  font-family: @sidr-font-family;
+  font-size: @sidr-font-size;
+  background: @sidr-background;
+  color: @sidr-text-color;
+
+  .list-group {
+    margin-top: 30px;
+
+    &:first-child {
+      margin-top: 10px;
+    }
+
+    .haik-admin-menu-brand {
+      padding: 15px;
+      font-size: @font-size-large;
+      color: @sidr-text-color;
+      
+      &:hover {
+        color: @sidr-text-hover-color;
+        text-decoration: none;
+      }
+    }
+    
+    .haik-admin-menu-search {
+      padding: 0 15px;
+      font-size: @font-size-large;
+      color: @sidr-text-color;
+    }
+
+    .list-group-item-heading {
+      margin-left: 15px;
+    }
+    .list-group-item {
+      color: @sidr-text-color;
+      position: relative;
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: -1px;
+      background-color: transparent;
+      border-style: none;
+      margin-left: 30px;
+      
+      &:hover {
+        color: @sidr-text-hover-color;
+      }
+    }
+  }
 }
