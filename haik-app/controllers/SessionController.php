@@ -34,7 +34,9 @@ class SessionController extends BaseController {
                     'password' => Input::get('password')
                 );
 
-                if (Auth::attempt($credentials))
+                $remember_me = !! Input::get('remember', false);
+
+                if (Auth::attempt($credentials, $remember_me))
                 {
                     return Redirect::intended('/');
                 }

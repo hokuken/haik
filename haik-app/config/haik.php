@@ -14,4 +14,12 @@ return array(
     'markdown' => array(
         'hardWrap' => false
     ),
+
+    'theme' => array(
+        'default' => 'ikk'
+    ),
+
+    'file' => array(
+        'path' => storage_path().'/files',
+    ),
 );
