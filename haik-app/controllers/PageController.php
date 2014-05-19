@@ -48,7 +48,9 @@ class PageController extends BaseController {
         $page_data['content'] = $page->content;
         $page_data['updated_at'] = $page->updated_at->format('Y年m月d日');
         $page_data['title'] = $this->getTitle();
-        
+        $page_data['scripts'] = $this->getScripts();
+
+
         $page_data['messages'] = array(
             'edit_link' => $page_data['title'] . 'の編集'
         );
@@ -73,6 +75,13 @@ class PageController extends BaseController {
         $theme_config['css'] = $theme_config['base_url'].'/'.$theme_config['css'];
 
         $page_data['theme'] = $theme_config;
+        $styles = array(
+            $theme_config['css'] => 10,
+            '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' => 90,
+            'assets/css/haik.css' => 100,
+        );
+        asort($styles);
+        $page_data['styles'] = array_keys($styles);
         
         $theme_template_name = $page->meta->get('theme.template', 'default');
         if (isset($theme_config['templates'][$theme_template_name]['filename']) && 
@@ -105,6 +114,19 @@ class PageController extends BaseController {
         }
         
         return $page_title;
+    }
+    
+    protected function getScripts()
+    {
+        $scripts = array(
+          '//code.jquery.com/jquery.js' => 10,
+          '//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js' => 20,
+          '//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js' => 30,
+          'assets/js/haik.js' => 100,
+        ); 
+        
+        asort($scripts);
+        return array_keys($scripts);
     }
 
 }
