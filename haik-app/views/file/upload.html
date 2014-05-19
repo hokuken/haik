@@ -1,0 +1,37 @@
+{% extends "page.layout_editor" %}
+
+{% set title = "ファイルのアップロード" %}
+
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+
+{% block navbar %}
+
+<div class="nav navbar-nav navbar-right">
+  <a href="{{ route('plugin.filr') }}" class="navbar-btn haik-btn haik-btn-info haik-btn-sm haik-btn-link haik-text-muted">ファイル一覧</a>
+  <a href="{{ route('show_page', '') }}" class="navbar-btn haik-btn haik-btn-sm haik-btn-link haik-text-muted">キャンセル</a>
+</div>
+
+{% endblock%}
+
+{% block content %}
+
+  <div class="haik-container">
+
+    <h1>{{ title }}</h1>
+
+    {{ form_open({'route': 'plugin.filr.upload', 'files': true} ) }}
+      
+          {{ form_file('file') }}
+
+          {{ form_submit('Upload', {'class': 'haik-btn haik-btn-primary'}) }}
+    {{ form_close() }}
+
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  {{ parent() }}
+{% endblock %}

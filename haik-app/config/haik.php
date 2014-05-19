@@ -18,4 +18,8 @@ return array(
     'theme' => array(
         'default' => 'ikk'
     ),
+
+    'file' => array(
+        'path' => storage_path().'/files',
+    ),
 );
