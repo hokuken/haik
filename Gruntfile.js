@@ -39,11 +39,23 @@ module.exports = function(grunt) {
         separator: ';'
       },
       js_haik: {
-        src: ['./haik-app/assets/js/*.js'],
+        src: ['./haik-app/assets/app/**/*.js', './haik-app/assets/js/*.js'],
         dest: './assets/js/haik.js'
       }
     },
-
+    copy: {
+      ng: {
+        files: [
+          {
+            expand: true,
+            cwd: './haik-app/assets/app/views',
+            src: ['./*.html'],
+            dest: './assets/views'
+          }
+        ]
+      }
+      
+    },
   	watch: {
       less: {
         files: [
@@ -57,9 +69,16 @@ module.exports = function(grunt) {
       },
       js_haik: {
         files: [
-          './haik-app/assets/js/*.js'
+          './haik-app/assets/js/*.js',
+          './haik-app/assets/app/**/*.js',
         ],
         tasks: ['concat:js_haik']
+      },
+      view: {
+        files: [
+          './haik-app/assets/app/views/*.html'
+        ],
+        tasks: ['copy:ng']
       }
     },
     exec: {
@@ -69,7 +88,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['less', 'concat','watch']);
-  grunt.registerTask('publish', ['less', 'concat']);
+  grunt.registerTask('default', ['less', 'concat', 'copy', 'watch']);
+  grunt.registerTask('publish', ['less', 'concat', 'copy']);
   grunt.registerTask('server', ['exec:server']);
 }
