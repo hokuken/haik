@@ -19,7 +19,25 @@ class FilrPluginController extends BaseController {
      */
     public function index()
     {
+        $files_collection = Filr::all();
+        $files = array();
 
+        foreach ($files_collection as $i => $file)
+        {
+            $files[$i] = $file->toArray();
+            $files[$i]['formatted_size'] = $file->formattedSize;
+            if ($file->type === 'image')
+            {
+                $filepath = Config::get('haik.file.path').'/'.$file['filepath'];
+                $imagesize = getimagesize($filepath);
+                $files[$i]['dimension'] = array('width' => $imagesize[0], 'height' => $imagesize[1]);
+            }
+        }
+        // !TODO: cache data
+        return View::make('file.list')->with(array(
+            'haik' => Config::get('haik'),
+            'files' => $files
+        ));
     }
 
     /**

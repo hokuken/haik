@@ -1,0 +1,61 @@
+{% extends "page.layout_editor" %}
+
+{% set title = "ファイル一覧" %}
+
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+
+{% block navbar %}
+
+<div class="nav navbar-nav navbar-right">
+  <a href="{{ route('plugin.filr.form') }}" class="navbar-btn haik-btn haik-btn-primary haik-btn-sm haik-btn-link haik-text-muted">アップロード</a>
+  <a href="{{ route('show_page', '') }}" class="navbar-btn haik-btn haik-btn-sm haik-btn-link haik-text-muted">キャンセル</a>
+</div>
+
+{% endblock%}
+
+{% block content %}
+
+  <div class="haik-container">
+
+    <h1>{{ title }}</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Title</th>
+                <th>Size</th>
+                <th>Uploaded At</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for file in files %}
+            <tr>
+                <td>
+                    {% if file.type == 'image' %}
+                      <img src="{{ asset('haik-contents/files/' ~ file.filepath) }}" style="max-width: 80px; max-height: 80px;">
+                    {% else %}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ file.title }}
+                    {% if file.type == 'image' %}
+                      <br><small>{{file.dimension.width}}x{{file.dimension.height}}</small>
+                    {% endif %}
+                </td>
+                <td>{{ file.formatted_size }}</td>
+                <td>{{ file.created_at }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  {{ parent() }}
+{% endblock %}

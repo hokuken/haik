@@ -8,7 +8,7 @@ $controller = 'Hokuken\Haik\Plugin\Filr\FilrPluginController';
 
 Route::group(array('prefix' => 'cmd/filr'), function($routes) use ($controller)
 {
-    Route::post('/', array(
+    Route::get('/', array(
             'uses' => $controller.'@index',
             'as' => 'plugin.filr'
         )
